@@ -101,7 +101,7 @@ else
             }
 
             $Partitionoffset = $disk.Size - ($winrePartition.Size + (1 *1024 *1024))
-            $newWinREPartition = New-Partition -Offset $partitionOffset -Size $winrePartition.Size -DiskNumber $winrePartition.DiskNumber -GptType '{de94bba4-06d1-4d40-a16a-bfd50179d6ac}'
+            $newWinREPartition = New-Partition -Offset $partitionOffset -Size $winrePartition.Size -DiskNumber $winrePartition.DiskNumber -GptType '{de94bba4-06d1-4d40-a16a-bfd50179d6ac}' -IsHidden:$true
            
 
             Get-Volume -Partition $newWinREPartition | Format-Volume -FileSystem NTFS -NewFileSystemLabel Recovery 
@@ -134,7 +134,7 @@ else
             C:\windows\system32\ReAgentc.exe /disable
             Remove-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber -Confirm:$false
             $winrepathset = "\\?\GLOBALROOT\device\harddisk$($newWinREPartition.DiskNumber)\partition$($newWinREPartition.PartitionNumber)\Recovery\WindowsRE"
-            & C:\Windows\System32\ReAgentc.exe /setreimage /path $winrepathset /target c:\Windows
+            C:\Windows\System32\ReAgentc.exe /setreimage /path $winrepathset /target c:\Windows
             C:\Windows\System32\ReAgentc.exe /enable
 
 
