@@ -134,7 +134,7 @@ else
             C:\windows\system32\ReAgentc.exe /disable
             Remove-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber -Confirm:$false
             C:\Windows\System32\ReAgentc.exe /setreimage /path \\?\GLOBALROOT\device\harddisk0\partition5\Recovery\WindowsRE /target c:\Windows
-
+            C:\Windows\System32\ReAgentc.exe /enable
         }
     }
 }
