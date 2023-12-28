@@ -133,7 +133,8 @@ else
             Write-host " Done!"
             C:\windows\system32\ReAgentc.exe /disable
             Remove-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber -Confirm:$false
-            C:\Windows\System32\ReAgentc.exe /setreimage /path "\\?\GLOBALROOT\device\harddisk$($winrePartition.DiskNumber)\partition$($winrePartition.PartitionNumber)\Recovery\WindowsRE" /target c:\Windows
+            $winrepathset = "\\?\GLOBALROOT\device\harddisk$($newWinREPartition.DiskNumber)\partition$($newWinREPartition.PartitionNumber)\Recovery\WindowsRE"
+            & C:\Windows\System32\ReAgentc.exe /setreimage /path $winrepathset /target c:\Windows
             C:\Windows\System32\ReAgentc.exe /enable
 
 
