@@ -11,7 +11,7 @@
 #HidePartition
 
 Write-host "Starting Process" -ForegroundColor White
-Write-host "-Gathering Disk Configs"  -ForegroundColor White
+Write-host "-Gathering Disk Configs" -NoNewline -ForegroundColor White
 
 $disk = Get-Disk | where-object {$_.IsBoot -eq $true}
 
@@ -23,7 +23,7 @@ if($disk -eq $null)
 }
 else
 {
-    Write-Host " + Found Boot Disk" -ForegroundColor Green
+    Write-Host " +Found Boot Disk" -ForegroundColor Green
 }
 
 $currentSize = $disk.size / 1024 /1024 /1024
@@ -79,7 +79,7 @@ else
             {
                 Write-Host "Path does not exist." -ForegroundColor Green
                 write-host " - Creating Temp Path for WinRE - " -ForegroundColor Yellow -NoNewline
-                new-item -Path "c:\windows\temp\winre" -ItemType Directory  | out-null
+                new-item -Path "c:\windows\temp\winre" -ItemType Directory | out-null
                 write-host "Created Path" -ForegroundColor Green
             }
 
@@ -92,7 +92,7 @@ else
 
             #prompt to proceed
 
-            Write-host " - Checking WinRE Partition:" -NoNewline -ForegroundColor Yellow
+            Write-host " - Checking WinRE Partition - " -NoNewline -ForegroundColor Yellow
             if (test-path -Path "C:\windows\temp\winre\Recovery\WindowsRE\Winre.wim")
             {
                 Write-Host "Found the WinRE WIM file and will proceed" -ForegroundColor Green
@@ -107,36 +107,39 @@ else
                 Stop-Transcript
                 exit
             }
-
+            Write-Host " - Creating new partition - " -NoNewline -ForegroundColor Yellow
             $Partitionoffset = $disk.Size - ($winrePartition.Size + (1 *1024 *1024))
             $newWinREPartition = New-Partition -Offset $partitionOffset -Size $winrePartition.Size -DiskNumber $winrePartition.DiskNumber -GptType '{de94bba4-06d1-4d40-a16a-bfd50179d6ac}'
+            Write-Host "Done" -ForegroundColor Green
            
-
-            Get-Volume -Partition $newWinREPartition | Format-Volume -FileSystem NTFS -NewFileSystemLabel Recovery 
-           
+            Write-Host " - Formatting new partition - " -NoNewline -ForegroundColor Yellow
+            Get-Volume -Partition $newWinREPartition | Format-Volume -FileSystem NTFS -NewFileSystemLabel Recovery  | out-null
+            Write-Host "Done" -ForegroundColor Green
+            
+            Write-host " - Checking Temp Path for New WinRE - " -ForegroundColor Yellow -NoNewline
             If(test-path -Path "C:\windows\temp\winreNew")
             {
-                write-host " Path Exists! Checking for already mapped partitions"
+                write-host "Path Exists! Checking for already mapped partitions" -ForegroundColor Cyan
                 #check for already mapped
 
             }
             else
             {
-                Write-Host "Path does not exist." -ForegroundColor Yellow
+                Write-Host "Path does not exist." -ForegroundColor Green
                 write-host " - Creating Temp Path for New WinRE - " -ForegroundColor Yellow -NoNewline
-                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory  | out-null
-                write-host "Created Path" -ForegroundColor Green
+                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory -InformationVariable $null
+                write-host "Done" -ForegroundColor Green
             }
 
-            write-host "Copying Data - " -ForegroundColor Yellow -NoNewline
+            write-host " - Adding access Path to New WinRE - " -ForegroundColor Yellow -NoNewline
             Add-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber            
-            Write-host " Done!" -ForegroundColor Green            
+            Write-host "Done!" -ForegroundColor Green            
             
             write-host "Copying Data - " -ForegroundColor Yellow -NoNewline
             Copy-Item -Path C:\windows\temp\winre\Recovery -Destination C:\Windows\Temp\winrenew -Container -Recurse
-            write-host "Copy Finished" -ForegroundColor Green
-            #remove Access Path
-            Write-host "Disconnecting mapped Access Paths" -ForegroundColor White
+            write-host "Done" -ForegroundColor Green
+            
+            Write-host "Disconnecting Mapped Access Paths" -ForegroundColor White
             
             write-host " - Removing Mapping for New Recovery Partition - " -NoNewline -ForegroundColor Yellow
             Remove-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber
@@ -148,7 +151,7 @@ else
 
             Write-host "Fixing Recovery Partitions and Settings" -ForegroundColor White
 
-            write-host " - Diabling Recovery Partition - " -ForegroundColor Yellow
+            write-host " - Disabling Recovery Partition - " -ForegroundColor Yellow
             C:\windows\system32\ReAgentc.exe /disable
             write-host "Done" -ForegroundColor Green
 
