@@ -11,7 +11,7 @@
 #HidePartition
 
 Write-host "Starting Process" -ForegroundColor White
-Write-host "-Gathering Disk Configs" -NoNewline -ForegroundColor White
+Write-host "-Gathering Disk Configs"  -ForegroundColor White
 
 $disk = Get-Disk | where-object {$_.IsBoot -eq $true}
 
@@ -23,7 +23,7 @@ if($disk -eq $null)
 }
 else
 {
-    Write-Host " +Found Boot Disk" -ForegroundColor Green
+    Write-Host " + Found Boot Disk" -ForegroundColor Green
 }
 
 $currentSize = $disk.size / 1024 /1024 /1024
@@ -39,12 +39,12 @@ if($currentSize - $allocatedSize -le 1)
 }
 else
 {
-    write-host " - Checking Partitions Order" -ForegroundColor White
+    write-host " - Checking Partitions Order" -ForegroundColor Yellow
 
 
     $partitions = Get-Partition -disk $disk
 
-    write-host "   Number of Partiions Found: $($partitions.count)"
+    write-host "   Number of Partitions Found: $($partitions.count)" -ForegroundColor Green
     write-host " - Finding Recovery Partitions - " -NoNewline -ForegroundColor Yellow
     $winrePartition = $partitions | where-object {$_.GptType -eq '{de94bba4-06d1-4d40-a16a-bfd50179d6ac}'}
     if($winrePartition -eq $null)
@@ -66,7 +66,7 @@ else
         }
         else
         {
-            write-host "Confirmed Partion is last current partition" -ForegroundColor Green
+            write-host "Confirmed Partition is last current partition" -ForegroundColor Green
             write-host " - Checking for WinRE TempPath - " -NoNewline -ForegroundColor Yellow
             If(test-path -Path "C:\windows\temp\winre")
             {
@@ -79,7 +79,7 @@ else
             {
                 Write-Host "Path does not exist." -ForegroundColor Green
                 write-host " - Creating Temp Path for WinRE - " -ForegroundColor Yellow -NoNewline
-                new-item -Path "c:\windows\temp\winre" -ItemType Directory
+                new-item -Path "c:\windows\temp\winre" -ItemType Directory  | out-null
                 write-host "Created Path" -ForegroundColor Green
             }
 
@@ -124,7 +124,7 @@ else
             {
                 Write-Host "Path does not exist." -ForegroundColor Yellow
                 write-host " - Creating Temp Path for New WinRE - " -ForegroundColor Yellow -NoNewline
-                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory -InformationVariable $null
+                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory  | out-null
                 write-host "Created Path" -ForegroundColor Green
             }
 
