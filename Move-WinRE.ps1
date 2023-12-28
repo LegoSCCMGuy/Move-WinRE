@@ -126,13 +126,14 @@ else
             write-host "Copy Finished"
             #remove Access Path
             Write-host "Disconnecting maps" -NoNewline
+            Remove-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber
             
             Remove-PartitionAccessPath -AccessPath "c:\windows\temp\winre" -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber
+
             Write-host " Done!"
             C:\windows\system32\ReAgentc.exe /disable
             Remove-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber -Confirm:$false
             C:\Windows\System32\ReAgentc.exe /setreimage /path \\?\GLOBALROOT\device\harddisk0\partition5\Recovery\WindowsRE /target c:\Windows
-            Remove-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber
 
         }
     }
