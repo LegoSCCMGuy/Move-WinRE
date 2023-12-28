@@ -141,6 +141,14 @@ else
             $size = (Get-PartitionSupportedSize -DiskNumber $winrePartition.DiskNumber -PartitionNumber ($winrePartition.PartitionNumber - 1))
 
             Resize-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber ($winrePartition.PartitionNumber - 1) -Size $size.SizeMax
+
+
+            $null = @"
+select disk $($newWinREPartition.DiskNumber)
+select partition $($newWinREPartition.PartitionNumber)
+gpt attributes=0x8000000000000001
+exit
+"@ | diskpart.exe
         }
     }
 }
