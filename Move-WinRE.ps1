@@ -122,18 +122,21 @@ else
             }
             else
             {
-                Write-Host "Path does not exist. Creating"
-                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory
-                write-host "Created Path"
+                Write-Host "Path does not exist." -ForegroundColor Yellow
+                write-host " - Creating Temp Path for New WinRE - " -ForegroundColor Yellow -NoNewline
+                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory -InformationVariable $null
+                write-host "Created Path" -ForegroundColor Green
             }
 
-
-            Add-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber
-            write-host "Copying Data"
+            write-host "Copying Data - " -ForegroundColor Yellow -NoNewline
+            Add-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber            
+            Write-host " Done!" -ForegroundColor Green            
+            
+            write-host "Copying Data - " -ForegroundColor Yellow -NoNewline
             Copy-Item -Path C:\windows\temp\winre\Recovery -Destination C:\Windows\Temp\winrenew -Container -Recurse
-            write-host "Copy Finished"
+            write-host "Copy Finished" -ForegroundColor Green
             #remove Access Path
-            Write-host "Disconnecting mapped Access Paths" -NoNewline -ForegroundColor White
+            Write-host "Disconnecting mapped Access Paths" -ForegroundColor White
             
             write-host " - Removing Mapping for New Recovery Partition - " -NoNewline -ForegroundColor Yellow
             Remove-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber
@@ -141,11 +144,11 @@ else
             
             write-host " - Removing Mapping for Old Recovery Partition - " -NoNewline -ForegroundColor Yellow          
             Remove-PartitionAccessPath -AccessPath "c:\windows\temp\winre" -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber
-            Write-host " Done!"
+            Write-host " Done!" -ForegroundColor Green
 
-            Write-host "Fixing Recovery Partitions and Settings" -NoNewline -ForegroundColor White
+            Write-host "Fixing Recovery Partitions and Settings" -ForegroundColor White
 
-            write-host " - Diabling Recovery Partition - " -NoNewline -ForegroundColor Yellow
+            write-host " - Diabling Recovery Partition - " -ForegroundColor Yellow
             C:\windows\system32\ReAgentc.exe /disable
             write-host "Done" -ForegroundColor Green
 
@@ -153,7 +156,7 @@ else
             Remove-Partition -DiskNumber $winrePartition.DiskNumber -PartitionNumber $winrePartition.PartitionNumber -Confirm:$false
             write-host "Done" -ForegroundColor Green
 
-            write-host " - Setting Recovery Partition Path - " -NoNewline -ForegroundColor Yellow
+            write-host " - Setting Recovery Partition Path - " -ForegroundColor Yellow
             $winrepathset = "\\?\GLOBALROOT\device\harddisk$($newWinREPartition.DiskNumber)\partition$($newWinREPartition.PartitionNumber)\Recovery\WindowsRE"
             C:\Windows\System32\ReAgentc.exe /setreimage /path $winrepathset /target c:\Windows
             write-host "Done" -ForegroundColor Green
@@ -162,7 +165,7 @@ else
             C:\Windows\System32\ReAgentc.exe /enable
             write-host "Done" -ForegroundColor Green
 
-            Write-host "Fixing Partitions" -NoNewline -ForegroundColor White
+            Write-host "Fixing Partitions" -ForegroundColor White
 
             write-host " - Resizing Partition Before New Recovery Partition - " -NoNewline -ForegroundColor Yellow
             $size = (Get-PartitionSupportedSize -DiskNumber $winrePartition.DiskNumber -PartitionNumber ($winrePartition.PartitionNumber - 1))
@@ -188,6 +191,6 @@ exit
 
 
 
-Write-host "Completed Process"
+Write-host "Completed Process" -ForegroundColor Green
 
 Stop-Transcript
