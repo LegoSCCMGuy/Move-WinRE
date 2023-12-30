@@ -3,6 +3,7 @@
 <p align="center">To move a Windows Recovery partition to the end of the disk and expand the volume preceding it</p>
 
 ## Links
+- [PowerShell Gallery](https://www.powershellgallery.com/packages/MoveWinRE "PSGallery")
 
 - [Repo](https://github.com/LegoSCCMGuy/Move-WinRE "MoveWinRE Repo")
 
@@ -23,7 +24,7 @@ Execution in an administrative powershell.
 
 ## Future Updates
 
-- [ ] Execution prompt
+- [x] Execution prompt
 - [ ] Execution level
 - [ ] MBR type support
 - [ ] Option to recover from media
