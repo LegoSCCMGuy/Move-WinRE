@@ -127,7 +127,7 @@ else
             {
                 Write-Host "Path does not exist." -ForegroundColor Green
                 write-host " - Creating Temp Path for New WinRE - " -ForegroundColor Yellow -NoNewline
-                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory -InformationVariable $null
+                new-item -Path "c:\windows\temp\winreNew" -ItemType Directory  | out-null
                 write-host "Done" -ForegroundColor Green
             }
 
@@ -135,7 +135,7 @@ else
             Add-PartitionAccessPath -AccessPath "C:\windows\temp\winreNew" -DiskNumber $newWinREPartition.DiskNumber -PartitionNumber $newWinREPartition.PartitionNumber            
             Write-host "Done!" -ForegroundColor Green            
             
-            write-host "Copying Data - " -ForegroundColor Yellow -NoNewline
+            write-host " - Copying Data - " -ForegroundColor Yellow -NoNewline
             Copy-Item -Path C:\windows\temp\winre\Recovery -Destination C:\Windows\Temp\winrenew -Container -Recurse
             write-host "Done" -ForegroundColor Green
             
@@ -164,7 +164,7 @@ else
             C:\Windows\System32\ReAgentc.exe /setreimage /path $winrepathset /target c:\Windows
             write-host "Done" -ForegroundColor Green
 
-            write-host " - Enabling Recovery Partition - " -NoNewline -ForegroundColor Yellow
+            write-host " - Enabling Recovery Partition - " -ForegroundColor Yellow
             C:\Windows\System32\ReAgentc.exe /enable
             write-host "Done" -ForegroundColor Green
 
