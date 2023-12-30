@@ -15,7 +15,7 @@
 
 
 ## Execution
-Execution on the powershell from and administrative powershell.
+Execution in an administrative powershell.
 
 ## Built With
 
