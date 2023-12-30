@@ -25,6 +25,8 @@ Execution in an administrative powershell.
 
 - [ ] Execution prompt
 - [ ] Execution level
+- [ ] MBR type support
+- [ ] Option to recover from media
 
 ## Author
 
