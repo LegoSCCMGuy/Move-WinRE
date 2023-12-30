@@ -4,9 +4,9 @@
 
 ## Links
 
-- [Repo](https://github.com/LegoSCCMGuy/MoveWinRE "MoveWinRE Repo")
+- [Repo](https://github.com/LegoSCCMGuy/Move-WinRE "MoveWinRE Repo")
 
-- [Bugs](https://github.com/LegoSCCMGuy/MoveWinRE/issues "Issues Page")
+- [Bugs](https://github.com/LegoSCCMGuy/Move-WinRE/issues "Issues Page")
 
 
 ## Screenshots
