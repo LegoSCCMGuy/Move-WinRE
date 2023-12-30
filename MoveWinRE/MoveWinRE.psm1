@@ -11,9 +11,9 @@
 #>
     [CmdletBinding()]
     param (
-        [Parameter()]
-        [bool]
-        $NoPrompt = $false
+        # [Parameter()]
+        # [bool]
+        # $NoPrompt = $false
     )
 Start-Transcript -Append
 

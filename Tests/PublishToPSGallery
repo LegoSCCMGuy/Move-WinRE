@@ -1,1 +1,0 @@
-Publish-Module -Path ..\MoveW_WinRE_module -NuGetApiKey $env:PowerShellGalleryAPI -WhatIf -Verbose -ErrorAction STOP
