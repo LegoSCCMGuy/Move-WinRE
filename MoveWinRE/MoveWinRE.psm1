@@ -35,7 +35,13 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 "@
 Write-Output $licenseText
-
+write-output ""
+$response = Read-Host -Prompt "Press 'y' to continue or any other key to abort"
+if ($response -ne 'y') {
+    Write-Output "Aborted."
+    exit
+}
+write-output ""
 Write-Output "Starting Process" -ForegroundColor White
 Write-Output "-Gathering Disk Configs" -NoNewline -ForegroundColor White
 
