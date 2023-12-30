@@ -1,4 +1,21 @@
-﻿Start-Transcript -Append
+﻿function Move-WinRE {
+    <#
+    .SYNOPSIS
+    Moves a Windows RE Partition to the end of the disk
+
+    .DESCRIPTION
+    Desc
+
+    .EXAMPLE
+    PS C:\> Move-WinRE
+#>
+    [CmdletBinding()]
+    param (
+        [Parameter()]
+        [bool]
+        $NoPrompt = $false
+    )
+Start-Transcript -Append
 
 $licenseText = @"
 Move-WinPE.PS1 - Used to move a windows recovery partition to the end of an expanded disk and expand the preceeding partition.
@@ -24,7 +41,7 @@ Write-host "-Gathering Disk Configs" -NoNewline -ForegroundColor White
 
 $disk = Get-Disk | where-object {$_.IsBoot -eq $true}
 
-if($disk -eq $null)
+if($null -eq $disk)
 {
     Write-Host "*** Error Selecting Disks ***" -ForegroundColor Red
     Stop-Transcript
@@ -56,7 +73,7 @@ else
     write-host "   Number of Partitions Found: $($partitions.count)" -ForegroundColor Green
     write-host " - Finding Recovery Partitions - " -NoNewline -ForegroundColor Yellow
     $winrePartition = $partitions | where-object {$_.GptType -eq '{de94bba4-06d1-4d40-a16a-bfd50179d6ac}'}
-    if($winrePartition -eq $null)
+    if($null -eq $winrePartition)
     {
         Write-host "No WinRE Partitions Found. Exiting... " -ForegroundColor Red
         Stop-Transcript
@@ -206,3 +223,4 @@ exit
 Write-host "Completed Process" -ForegroundColor Green
 
 Stop-Transcript
+}
