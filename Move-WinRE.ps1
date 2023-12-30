@@ -1,14 +1,23 @@
 ﻿Start-Transcript -Append
 
-#get Disk Layouts
-#check WinRE partition
-#Check avialble Space
-#capture Partition
-#remove WinRE
-#Extend and Shirnk System
-#Create partition
-#restore Partiion
-#HidePartition
+$licenseText = @"
+Move-WinPE.PS1 - Used to move a windows recovery partition to the end of an expanded disk and expand the preceeding partition.
+Copyright (C) 2023 Barry Harriman
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"@
+write-host $licenseText
 
 Write-host "Starting Process" -ForegroundColor White
 Write-host "-Gathering Disk Configs" -NoNewline -ForegroundColor White
