@@ -3,7 +3,7 @@
 <p align="center">To move a Windows Recovery partition to the end of the disk and expand the volume preceding it</p>
 
 ## Links
-- [PowerShell Gallery](https://www.powershellgallery.com/packages/MoveWinRE/1.0.4 "PowerShell Gallery")
+- [PowerShell Gallery](https://www.powershellgallery.com/packages/MoveWinRE "PowerShell Gallery")
 
 - [Repo](https://github.com/LegoSCCMGuy/Move-WinRE "MoveWinRE Repo")
 
