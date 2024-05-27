@@ -11,9 +11,12 @@
 #>
     [CmdletBinding()]
     param (
-        # [Parameter()]
-        # [bool]
-        # $NoPrompt = $false
+        [Parameter()]
+        [bool]
+        $IAcceptLicense = $false,
+        [Parameter()]
+        [bool]
+        $Silent = $false
     )
 Start-Transcript -Append
 

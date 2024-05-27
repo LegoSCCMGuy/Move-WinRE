@@ -1,1 +1,1 @@
-Publish-Module -Path 'E:\sources\github\move-WinRE\MoveWinRE' -NuGetApiKey .... -Verbose -ErrorAction STOP
+Publish-Module -Path 'E:\sources\github\move-WinRE\Move-WinRE' -NuGetApiKey .... -Verbose -ErrorAction STOP

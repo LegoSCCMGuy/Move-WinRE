@@ -1,4 +1,4 @@
-<h1 align="center">MoveWinRE</h1>
+<h1 align="center">Move-WinRE</h1>
 
 <p align="center">To move a Windows Recovery partition to the end of the disk and expand the volume preceding it</p>
 
